@@ -1,31 +1,32 @@
-{% extends "layout.html" %}
-{% block content %}
-<h1>Edit Detials</h1>
-<form action="{{ url_for('savingUser', id=data[0][0]) }}" method="POST">
-    {{ form.hidden_tag() }}
-        <div>
-            {{ form.name.label }}<br>
-            {{ form.name(size=20, value=data[0][1]) }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.phone.label }}<br>
-            {{ form.phone(size=20,value=data[0][2]) }}<br>
-            {% for error in form.phone.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.mail.label }}<br>
-            {{ form.mail(size=20,value=data[0][3]) }}<br>
-            {% for error in form.mail.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.save() }}
-        </div>
+{% extends "layout.html" %} {% block content %}
+<form
+  action="{{ url_for('savingUser', id=data[0][0]) }}"
+  method="POST"
+  class="form"
+>
+  <h3>Edit Detials</h3>
+  {{ form.hidden_tag() }}
+  <div>
+    {{ form.name.label }}<br />
+    {{ form.name(size=20, value=data[0][1]) }}<br />
+    {% for error in form.name.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.phone.label }}<br />
+    {{ form.phone(size=20,value=data[0][2]) }}<br />
+    {% for error in form.phone.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.mail.label }}<br />
+    {{ form.mail(size=20,value=data[0][3]) }}<br />
+    {% for error in form.mail.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>{{ form.save() }}</div>
 </form>
 {% endblock %}

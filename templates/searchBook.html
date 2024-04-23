@@ -1,26 +1,45 @@
 {% extends "layout.html" %} {% block content %}
-<div class="search-book">
-  <a href="{{url_for("addBook")}}"><button>Add New</button></a>
-  <div class="search-bar">
-    <form action="{{url_for("searchingBook")}}" method="POST">
-      <input type="search" name="query" />
-      <button type="submit">Search</button>
+<div class="">
+  <div
+    class="d-flex flex-row justify-content-center mt-2 gap-2"
+    style="width: 100%"
+  >
+    <form
+      action="{{url_for('searchingBook')}}"
+      method="POST"
+      style="width: 80%"
+      class="d-flex"
+    >
+      <input
+        type="search"
+        name="query"
+        placeholder="search here..."
+        class="form-control"
+      />
+      <button type="submit" class="btn btn-sm btn-primary">Search</button>
     </form>
+    <a href="{{url_for('addBook')}}" class="btn btn-outline-success">Add New</a>
   </div>
-  <div class="books">
-    {% if data %}
-    {% for book in data %}
-    <a href="/showBook?id={{ book[1] }}"><div class="book">
-        <i class="fa-solid fa-book"></i>
-        <p>{{book[0]}}</p>
-        <p>{{book[2]}}</p>
-    </div>
-</a>
-    {% endfor %}
-    {% else %}
-        <div class="error">
-            <h3>No book Found!</h3>
+  <div class="d-flex flex-wrap justify-content-around m-2">
+    {% if data %} {% for book in data %}
+    <a href="/showBook?id={{ book[1] }}" class="link-dark link-underline-opacity-0"
+      ><div
+        class="border border-secondary rounded m-2 p-2 d-flex align-items-center justify-content-around border-radius-2"
+        style="width: 17rem"
+      >
+        <i
+          class="fa-solid fa-book fs-1 text-info rounded-circle p-2 bg-white border border-secondary"
+        ></i>
+        <div class="ml-4">
+          <p>{{book[0]}}</p>
+          <p>{{book[2]}}</p>
         </div>
+      </div>
+    </a>
+    {% endfor %} {% else %}
+    <div class="alert alert-danger" style="width: 100%">
+      <h3>No book Found!</h3>
+    </div>
     {% endif %}
   </div>
 </div>

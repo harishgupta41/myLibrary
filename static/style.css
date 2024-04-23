@@ -1,115 +1,214 @@
-:root{
-    --bg-body: #f9f7f3;
-    --bg-light: #fff;
-    --bg-blue: #00a6fb;
+:root {
+  --bg-body: #f9f7f3;
+  --bg-light: #fff;
+  --bg-blue: #00a6fb;
 }
-*{
-    margin: 0%;
-    padding: 0%;
-    box-sizing: border-box;
-    /* font-family: sans-serif; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body{
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bg-body);
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-body);
+}
+a{
+    text-decoration: none;
 }
 /* admin-login */
-.login-container{
-    /* border: 2px solid black; */
+.login-container {
+  /* border: 2px solid black; */
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://assets-global.website-files.com/604a97c70aee09eed25ce991/61897a35583a9b51db018d3e_MartinPublicSeating-97560-Importance-School-Library-blogbanner1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 50px 50px 100px 50px inset rgb(24, 24, 24),
+    50px 50px 100px 50px inset gray, 0 0 0 0, 50px 50px 100px 50px inset black;
+}
+.close {
+  font-size: 1.2em;
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+  color: red;
+}
+.login {
+  min-width: 250px;
+  width: 30%;
+  border: 1px solid gray;
+  padding: 1em;
+  background-color: var(--bg-light);
+  box-shadow: 2px 2px 20px 3px #fff;
+}
+
+.login > h1 {
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid gray;
+}
+.login form {
+  width: 100%;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.login form label {
+  font-size: 1.3em;
+}
+.login form input {
+  width: 100%;
+  font-size: 1.1em;
+  padding: 0.4em 0.3em;
+  margin: 0.2em 0;
+  border: 1px solid gray;
+  outline: none;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  padding: 0.3em 0;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--bg-blue);
+  background-color: var(--bg-blue);
+  border: 5px solid var(--bg-blue);
+  cursor: pointer;
+  color: #fff;
+}
+.submit-btn:hover {
+  transition: 200ms;
+  background-color: rgb(44, 117, 228);
+}
+header {
+  background-color: lavender;
+  min-height: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 100%;
+  width: 40%;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: start;
+  gap: 0.5em;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.8em;
+  color: #00a6fb;
+}
+.logo img {
+  max-width: 80px;
+}
+
+nav {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#openMenu,
+#closeMenu,
+#check {
+  font-size: 1.5em;
+  color: #00a6fb;
+  cursor: pointer;
+  margin-right: 1em;
+  display: none;
+}
+nav a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  transition: 0.2s;
+}
+nav a:hover {
+  color: #00a6fb;
+}
+.otp-box{
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    background-image: url('../static/img/image-books.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.form{
+    border: 1px solid lightgray;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-}
-.login{
-    min-width: 250px;
-    width: 30%;
-    /* margin: auto; */
-    /* margin-top: 2em; */
-    border: 1px solid gray;
-    padding: 1em;
-    background-color: var(--bg-light);
-    box-shadow: 1px 1px 20px 3px gray;
-}
-
-.login>h1{
-    padding-bottom: .2em;
-    border-bottom: 1px solid gray;
-}
-.login form{
-    width: 100%;
+    padding: .5em;
+    margin: auto;
+    gap: .5em;
     margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
 }
-.login form label{
-    font-size: 1.3em;
+.form label{
+    color: gray;
+    margin-top: 1em;
 }
-.login form input{
-    width: 100%;
+.form input, textarea{
+    min-width: 350px;
     font-size: 1.1em;
-    padding: .4em .3em;
-    margin: .2em 0;
-    border: 1px solid gray;
-    outline: none;
-    border-radius: 4px;
+    padding: .2em .4em;
+    border: 1ps solid gray;
+    outline: rgb(175, 175, 240);
 }
-
-.submit-btn{
-    padding: .3em 0;
-    font-size: 1em;
-    font-weight: bold;
-    color: var(--bg-blue);
-    background-color: var(--bg-blue);
-    border: 5px solid var(--bg-blue);
-    cursor: pointer;
+.form input[type="submit"]{
+    background-color: #00a6fb;
+    border: 1px solid #00a6fb;
     color: #fff;
+    font-weight: bold;
+    transition: .5s;
 }
-.submit-btn:hover{
-    transition: 200ms;
-    background-color: rgb(44, 117, 228);
+.form input[type="submit"]:hover{
+    box-shadow: 1px 1px 10px 5px gray;
 }
-header{
-    background-color: lavender;
-    /* border: 2px solid black; */
-    height: 12vh;
+@media all and (width < 750px) {
+  .logo {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo{
-    
-    height: 100%; 
-    width: 23%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    font-weight: 600;
-    font-size: 1.8em;
+  }
+  nav {
+    height: 100vh;
+    position: fixed;
+    right: -100%;
+    top: 0;
+    bottom: 0;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    background-color: rgb(39, 38, 38);
+    z-index: 1;
+    transition: right 1s ease;
+  }
+  nav a {
     color: #00a6fb;
-
-    /* border: 2px solid black; */
+  }
+  #openMenu,
+  #closeMenu {
+    display: block;
+  }
+  #closeMenu {
+    position: absolute;
+    top: 0.5em;
+    right: 0em;
+  }
 }
-.logo img{
-    width: 7.5vw;
-    height: 100%;
-}
-
-nav{
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-nav a{
-    text-decoration: none;
-    color:black;
-
+@media all and (width < 450px) {
+  nav {
+    width: 100%;
+  }
 }

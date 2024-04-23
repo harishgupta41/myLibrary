@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 <div>
-    <form action="{{url_for("returningBook")}}" method="POST">
+    <form action="{{url_for("returningBook")}}" method="POST" class="form">
+        <h3>Return Book</h3>
         <label for="isbn">ISBN/BN</label>
-        <input type="text" name="bookid" id="isbn">
-        <button type="submit">Return</button>
+        <input type="text" name="bookid" id="isbn" class="form-control" />
+        <button type="submit" class="btn btn-outline-success mt-3" style="width: 100%;">Return</button>
     </form>
 </div>
 {% endblock %}

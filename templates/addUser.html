@@ -1,35 +1,31 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="add-user">
-    <h1>Add User</h1>
-    <form action="{{url_for("adding_user")}}" method="POST">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.name.label }}<br>
-            {{ form.name(size=20) }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.phone.label }}<br>
-            {{ form.phone(size=20) }}<br>
-            {% for error in form.phone.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.mail.label }}<br>
-            {{ form.mail(size=20) }}<br>
-            {% for error in form.mail.errors %}
-            <span style="color: red;">{{ error }}</span><br>
-            {% endfor %}
-        </div>
-        <div>
-            {{ form.submit() }}
-        </div>
-    </form>
-
+    <form action="{{url_for('adding_user')}}" method="POST" class="form">
+      <h1 class="text-center border-bottom border-danger">Add User</h1>
+    {{ form.hidden_tag() }}
+    <div>
+      {{ form.name.label }}<br />
+      {{ form.name(size=20) }}<br />
+      {% for error in form.name.errors %}
+      <span style="color: red">{{ error }}</span><br />
+      {% endfor %}
+    </div>
+    <div>
+      {{ form.phone.label }}<br />
+      {{ form.phone(size=20) }}<br />
+      {% for error in form.phone.errors %}
+      <span style="color: red">{{ error }}</span><br />
+      {% endfor %}
+    </div>
+    <div>
+      {{ form.mail.label }}<br />
+      {{ form.mail(size=20) }}<br />
+      {% for error in form.mail.errors %}
+      <span style="color: red">{{ error }}</span><br />
+      {% endfor %}
+    </div>
+    <div>{{ form.submit() }}</div>
+  </form>
 </div>
 {% endblock %}
 <!-- <!DOCTYPE html>

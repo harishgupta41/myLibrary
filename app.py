@@ -11,13 +11,13 @@ app.config['SECRET_KEY'] = 'MinorProjectLibraryManagementSystem'
 # Configure MySQL database connection
 db = mysql.connector.connect(
     host="localhost",
-    user="harry",
-    password="dl3san3581",
+    user="djgupta",
+    password="djgupta",
     database="library"
 )
 
 cursor = db.cursor()
-session['error']=''
+# session['error']=''
 @app.route('/')
 def index():
     form = LoginForm()

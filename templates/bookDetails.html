@@ -1,22 +1,35 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="book-details">
-    {% if data %}
-    <p>{{ data[0][0] }}</p>
-    <p>{{ data[0][1] }}</p>
-    <p>{{ data[0][2] }}</p>
-    <p>{{ data[0][3] }}</p>
-    <p>{{ data[0][4] }}</p>
-    <p>{{ data[0][5] }}</p>
+{% extends "layout.html" %} {% block content %}
+<div
+  class="m-auto p-3 border border-info mt-5 rounded"
+  style="width: fit-content"
+>
+  {% if data %}
+  <h3 class="text-center">{{ data[0][0] }}</h3>
+  <p><i>ISBN: </i> {{ data[0][1] }}</p>
+  <p><i>Author: </i> {{ data[0][2] }}</p>
+  <p><i>Description: </i> {{ data[0][3] }}</p>
+  <p><i>Publisher: </i> {{ data[0][4] }}</p>
+  <p><i>Gener: </i> {{ data[0][5] }}</p>
+  <p>Book Status: {{ status }}</p>
 
-    <p>Book Status: {{ status }}</p>
-    <a href="/editBook?id={{ data[0][1] }}"><button>Edit Details</button></a>
-    <a href="/deleteBook?id={{ data[0][1] }}"><button>Delete Book</button></a>
-        {% if status=='Available' %}
-            <a href="/issueBook?id={{ data[0][1] }}"><button>Issue Books</button></a>
-        {% endif %}
-    {% else %}
-        <h2>No Book Data!</h2>
+  <div class="d-flex justify-content-around">
+    <a href="/editBook?id={{ data[0][1] }}" class="btn btn-sm btn-outline-info"
+      >Edit Details</a
+    >
+    <a
+      href="/deleteBook?id={{ data[0][1] }}"
+      class="btn btn-sm btn-outline-danger"
+      >Delete Book</a
+    >
+    {% if status=='Available' %}
+    <a
+      href="/issueBook?id={{ data[0][1] }}"
+      class="btn btn-sm btn-outline-warning"
+      >Issue Books</a
+    >
+    {% endif %} {% else %}
+    <h2>No Book Data!</h2>
     {% endif %}
+  </div>
 </div>
 {% endblock %}

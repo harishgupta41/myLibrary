@@ -1,40 +1,50 @@
 {% extends "layout.html" %} {% block content %}
-<div class="search-user">
-  <a href="{{url_for("addUser")}}"><button>Add New</button></a>
-  <div class="search-bar">
-    <form action="{{url_for("searchingUser")}}" method="POST">
-      <input type="search" name="query" />
-      <button type="submit">Search</button>
+<div class="users">
+  <div class="d-flex flex-row justify-content-center mt-2" style="width: 100%">
+    <form
+      action="{{url_for('searchingUser')}}"
+      method="POST"
+      style="width: 80%"
+      class="d-flex align-items-center"
+    >
+      <input type="search" name="query" placeholder="search here" class="form-control" />
+      <button type="submit" class="btn btn-primary">Search</button>
     </form>
+    <a href="{{url_for('addUser')}}" class="btn btn-outline-success btn-sm m-2">
+      Add New
+    </a>
   </div>
-  <div class="users">
-    <h1>Users</h1>
-    {% if data %}
-    {% for users in data %}
-    <a href="/showUser?id={{ users[0] }}">
-    <div class="user">
-        <i class="fa-solid fa-user"></i>
-        <p>{{users[1]}}</p>
-        <p>{{users[2]}}</p>
-    </div>
-  </a>
-    {% endfor %}
-    {% else %}
-        <div class="error">
-            <h3>No User Found!</h3>
+  <h1>Users</h1>
+  <div class="d-flex flex-wrap">
+    {% if data %} {% for users in data %}
+    <a href="/showUser?id={{ users[0] }}" class="">
+      <div
+        class="border border-dark m-2 d-flex align-items-center justify-content-around rounded border-radius-2"
+        style="width: 14rem"
+      >
+        <i
+          class="fa-solid fa-user fs-1 text-info rounded-circle p-2 bg-white border border-secondary"
+        ></i>
+        <div class="text-center">
+          <p>{{users[1]}}</p>
+          <p>{{users[2]}}</p>
         </div>
+      </div>
+    </a>
+    {% endfor %} {% else %}
+    <div class="alert alert-danger" style="width: 100%;">
+      <h3>No User Found!</h3>
+    </div>
     {% endif %}
   </div>
   <div class="fine-users">
     <h1>Pending Fine</h1>
-    {% if fine %}
-    {% for user in fine %}
+    {% if fine %} {% for user in fine %}
     <div>
       <p>{{user[1]}}</p>
       <p>Fine: {{user[4]}}</p>
     </div>
-    {% endfor %}
-    {% endif %}
+    {% endfor %} {% endif %}
   </div>
 </div>
 {% endblock %}

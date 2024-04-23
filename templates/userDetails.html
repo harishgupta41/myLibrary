@@ -1,16 +1,21 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="user-details">
-    {% if data %}
-        <p>{{ data[0][1] }}</p>
-        <p>{{ data[0][0] }}</p>
-        <p>{{ data[0][2] }}</p>
-        <p>{{ data[0][3] }}</p>
+{% extends "layout.html" %} {% block content %}
+<h2 class="text-center m-auto" style="width: fit-content;">User Details</h2>
+<div
+  class="m-auto p-3 border border-info mt-5 rounded"
+  style="width: fit-content"
+>
+  {% if data %}
+  <h3>{{ data[0][1] }}</h3>
+  <p><i>UserId: </i> {{ data[0][0] }}</p>
+  <p><i>Phone: </i> {{ data[0][2] }}</p>
+  <p><i>Email: </i> {{ data[0][3] }}</p>
 
-        <a href="/editUser?id={{ data[0][0] }}"><button>Edit Details</button></a>
-        <a href="/deleteUser?id={{ data[0][0] }}"><button>Delete User</button></a>
-    {% else %}
-        <h2>No User Data!</h2>
-    {% endif %}
+  <div class="d-flex justify-content-around">
+    <a href="/editUser?id={{ data[0][0] }}" class="btn btn-sm btn-outline-info">Edit Details</a>
+    <a href="/deleteUser?id={{ data[0][0] }}" class="btn btn-sm btn-outline-danger">Delete User</a>
+  </div>
+  {% else %}
+  <h2>No User Data!</h2>
+  {% endif %}
 </div>
 {% endblock %}

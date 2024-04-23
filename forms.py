@@ -17,8 +17,8 @@ class LoginForm(FlaskForm):
 class OTPForm(FlaskForm):
     otp = StringField('OTP',[
         validators.DataRequired(message="OTP must be filled"),
-    ])
-    submit=SubmitField('Verify',render_kw={'class':'verify-otp-btn'})
+    ], render_kw={'class':'form-control'})
+    submit=SubmitField('Verify',render_kw={'class':'verify-otp-btn btn btn-primary'})
     csrf_token = StringField('CSRF Token')
 
 class AddBookForm(FlaskForm):
