@@ -10,7 +10,11 @@
   <p><i>Description: </i> {{ data[0][3] }}</p>
   <p><i>Publisher: </i> {{ data[0][4] }}</p>
   <p><i>Gener: </i> {{ data[0][5] }}</p>
-  <p>Book Status: {{ status }}</p>
+  {% if status == 'Available' %}
+  <p>Book Status: <span class="text-success">{{ status }}</span></p>
+  {% else %}
+  <p>Book Status: <span class="text-danger">{{ status }}</span></p>
+  {% endif %}
 
   <div class="d-flex justify-content-around">
     <a href="/editBook?id={{ data[0][1] }}" class="btn btn-sm btn-outline-info"

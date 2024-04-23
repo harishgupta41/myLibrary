@@ -13,6 +13,9 @@
   <div class="d-flex justify-content-around">
     <a href="/editUser?id={{ data[0][0] }}" class="btn btn-sm btn-outline-info">Edit Details</a>
     <a href="/deleteUser?id={{ data[0][0] }}" class="btn btn-sm btn-outline-danger">Delete User</a>
+    {% if data[0][4] > 0 %}
+    <a href="/payFine?id={{ data[0][0] }}" class="btn btn-sm btn-outline-success">Pay Fine</a>
+    {% endif %}
   </div>
   {% else %}
   <h2>No User Data!</h2>

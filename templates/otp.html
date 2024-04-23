@@ -14,6 +14,18 @@
   </head>
   <body>
     <div class="otp-box">
+      {% if error %}
+      <div class="alert alert-danger">
+        <div
+          class="text-center m-auto"
+          id="loginError"
+          style="width: 100%"
+        >
+        <h5>{{ error }}</h5>
+        <!-- <i class="fa fa-times close" onclick="closeError();"></i> -->
+        </div>
+      </div>
+      {% endif %}
       <div class="m-auto p-5" style="width: fit-content">
         <div class="mt-5 border border-dark text-center bg-light p-5">
           <h1 class="border-bottom border-danger">OTP Verification</h1>

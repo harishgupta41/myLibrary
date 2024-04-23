@@ -2,6 +2,7 @@
   --bg-body: #f9f7f3;
   --bg-light: #fff;
   --bg-blue: #00a6fb;
+  --light: lavender;
 }
 * {
   margin: 0;
@@ -13,8 +14,8 @@ body {
   height: 100vh;
   background-color: var(--bg-body);
 }
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
 }
 /* admin-login */
 .login-container {
@@ -89,7 +90,7 @@ a{
   background-color: rgb(44, 117, 228);
 }
 header {
-  background-color: lavender;
+  background-color: var(--light);
   min-height: 10vh;
   width: 100%;
   display: flex;
@@ -137,46 +138,57 @@ nav a {
 nav a:hover {
   color: #00a6fb;
 }
-.otp-box{
-    width: 100%;
-    min-height: 100vh;
-    background-image: url('../static/img/image-books.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.otp-box {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("../static/img/image-books.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.form{
-    border: 1px solid lightgray;
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: .5em;
-    margin: auto;
-    gap: .5em;
-    margin-top: 1em;
+.form {
+  width: 100%;
+  border: 1px solid lightgray;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+  margin: auto;
+  gap: 0.5em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  box-shadow: 2px 2px 40px 2px gray;
 }
-.form label{
-    color: gray;
-    margin-top: 1em;
+.form label {
+  color: gray;
+  margin-top: 1em;
 }
-.form input, textarea{
-    min-width: 350px;
-    font-size: 1.1em;
-    padding: .2em .4em;
-    border: 1ps solid gray;
-    outline: rgb(175, 175, 240);
+.form input,
+textarea {
+  width: 100%;
+  min-width: 350px;
+  font-size: 1.1em;
+  padding: 0.2em 0.4em;
+  border: 1ps solid gray;
+  outline: rgb(175, 175, 240);
 }
-.form input[type="submit"]{
-    background-color: #00a6fb;
-    border: 1px solid #00a6fb;
-    color: #fff;
-    font-weight: bold;
-    transition: .5s;
+.form input[type="submit"] {
+  background-color: #00a6fb;
+  border: 1px solid #00a6fb;
+  color: #fff;
+  font-weight: bold;
+  transition: 0.5s;
 }
-.form input[type="submit"]:hover{
-    box-shadow: 1px 1px 10px 5px gray;
+.form input[type="submit"]:hover {
+  box-shadow: 1px 1px 10px 5px gray;
 }
+.link {
+  transition: 0.5s;
+}
+.link:hover {
+  transform: translateY(-10px);
+}
+
 @media all and (width < 750px) {
   .logo {
     width: 100%;

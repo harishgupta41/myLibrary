@@ -1,42 +1,42 @@
 {% extends "layout.html" %} {% block content %}
-<div class="add-book">
-  <form action="{{url_for("adding_book")}}" method="POST" class="form">
-    <h1 class="text-center border-bottom border-danger">Add Book</h1>
-    {{ form.hidden_tag() }}
-    <div>
-      {{ form.bookId.label }}<br />
-      {{ form.bookId(size=20) }}<br />
-    </div>
-    <div>
-      {{ form.bookName.label }}<br />
-      {{ form.bookName(size=20) }}<br />
-      {% for error in form.bookName.errors %}
-      <span style="color: red">{{ error }}</span><br />
-      {% endfor %}
-    </div>
-    <div>
-      {{ form.author.label }}<br />
-      {{ form.author(size=20) }}<br />
-      {% for error in form.author.errors %}
-      <span style="color: red">{{ error }}</span><br />
-      {% endfor %}
-    </div>
-    <div>
-      {{ form.description.label }}<br />
-      {{ form.description(rows=5,cols=20) }}<br />
-    </div>
-    <div>
-      {{ form.publisher.label }}<br />
-      {{ form.publisher(size=20) }}<br />
-    </div>
-    <div>
-      {{ form.gener.label }}<br />
-      {{ form.gener(size=20) }}<br />
-      {% for error in form.gener.errors %}
-      <span style="color: red">{{ error }}</span><br />
-      {% endfor %}
-    </div>
-    <div>{{ form.submit() }}</div>
-  </form>
-</div>
+<form action="{{url_for('adding_book')}}" method="POST" class="form">
+  <h1 class="text-center border-bottom border-danger">Add Book</h1>
+  {{ form.hidden_tag() }}
+  <div>
+    {{ form.bookId.label }}<br />
+    {{ form.bookId(size=20) }}<br />
+  </div>
+  <div>
+    {{ form.bookName.label }}<br />
+    {{ form.bookName(size=20) }}<br />
+    {% for error in form.bookName.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.author.label }}<br />
+    {{ form.author(size=20) }}<br />
+    {% for error in form.author.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>
+    {{ form.description.label }}<br />
+    {{ form.description(rows=5,cols=20) }}<br />
+  </div>
+  <div>
+    {{ form.publisher.label }}<br />
+    {{ form.publisher(size=20) }}<br />
+  </div>
+  <div>
+    {{ form.gener.label }}<br />
+    {{ form.gener(size=20) }}<br />
+    {% for error in form.gener.errors %}
+    <span style="color: red">{{ error }}</span><br />
+    {% endfor %}
+  </div>
+  <div>{{ form.submit() }}</div>
+</form>
+<!-- <div class="add-book">
+</div> -->
 {% endblock %}

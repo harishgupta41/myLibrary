@@ -23,14 +23,14 @@
   </head>
   <body>
     <div class="login-container">
-      {% if 'error' in session and session['error'] != '' %}
+      {% if error %}
       <div
         class="alert alert-danger text-center"
         id="loginError"
         style="width: 50%"
       >
         <i class="fa fa-times close" onclick="closeError();"></i>
-        <h3>{{ session['error'] }}</h3>
+        <h3>{{ error }}</h3>
       </div>
       {% endif %}
       <div class="login">

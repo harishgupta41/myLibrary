@@ -22,7 +22,7 @@
   </div>
   <div class="d-flex flex-wrap justify-content-around m-2">
     {% if data %} {% for book in data %}
-    <a href="/showBook?id={{ book[1] }}" class="link-dark link-underline-opacity-0"
+    <a href="/showBook?id={{ book[1] }}" class="link-dark link-underline-opacity-0 link"
       ><div
         class="border border-secondary rounded m-2 p-2 d-flex align-items-center justify-content-around border-radius-2"
         style="width: 17rem"
@@ -32,7 +32,7 @@
         ></i>
         <div class="ml-4">
           <p>{{book[0]}}</p>
-          <p>{{book[2]}}</p>
+          <p><i>by</i> {{book[2]}}</p>
         </div>
       </div>
     </a>

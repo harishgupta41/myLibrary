@@ -9,13 +9,13 @@
     </div>
     {% endif %}
     <div class="d-flex justify-content-around">
-      <div class="issued-books mx-2" style="max-height: 70vh; overflow: scroll;">
+      <div class="issued-books mx-2" style="max-height: 70vh; overflow: auto;">
         <h3 class="text-center text-info position-sticky top-0 z-1 bg-white">Issued Books</h3>
         {% if books %} {% for book in books %}
         <div class="card border border-secondary p-3 m-1">
-          <p>{{ book[4] }}</p>
-          <p>{{ book[1] }}</p>
-          <p>{{ book[6] }}</p>
+          <p><i>Title:</i> {{ book[4] }}</p>
+          <p><i>Issuer:</i> {{ book[1] }}</p>
+          <p><i>Issuer Id:</i> {{ book[6] }}</p>
         </div>
         {% endfor %} 
         {% else %}
@@ -29,10 +29,10 @@
         {% if books %} {% for book in books %} {% if book[3] <= today %}
 
         <div class="card border border-secondary p-3">
-          <p>{{ book[4] }}</p>
-          <p>{{ book[1] }}</p>
-          <p>{{ book[6] }}</p>
-          <p>{{ book[3] }}</p>
+          <p><i>Title:</i> {{ book[4] }}</p>
+          <p><i>Issuer:</i> {{ book[1] }}</p>
+          <p><i>Issuer Id:</i> {{ book[6] }}</p>
+          <p><i>Return Date:</i> {{ book[3] }}</p>
         </div>
         {% endif %} {% endfor %} 
         {% else %}
