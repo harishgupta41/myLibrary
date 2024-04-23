@@ -18,8 +18,42 @@ try:
         database="library"
     )
     cursor = db.cursor()
+    # creating tables in database if they don't exist
+    cursor.execute('''create table if not exists users (
+        userId VARCHAR(64) NOT NULL PRIMARY KEY,
+        fname VARCHAR(100) NOT NULL,
+        phone VARCHAR(13) NOT NULL,
+        mail_id VARCHAR(100) NOT NULL,
+        fine INT(5) DEFAULT 0
+    )''')
+    cursor.execute('''create table if not exists books (
+        title VARCHAR(500) NOT NULL,
+        isbn_bn VARCHAR(64) NOT NULL PRIMARY KEY,
+        author VARCHAR(200) NOT NULL,
+        description VARCHAR(5000) NOT NULL,
+        Publisher VARCHAR(200),
+        gener VARCHAR(200)
+    )''')
+    cursor.execute('''create table if not exists issued_books (
+        isbn_bn VARCHAR(64) NOT NULL,
+        issuer VARCHAR(100) NOT NULL,
+        issue_date DATE NOT NULL,
+        return_date DATE NOT NULL,
+        book_name VARCHAR(100) NOT NULL,
+        author VARCHAR(100) NOT NULL,
+        issuer_id VARCHAR(64) NOT NULL
+    )''')
+    cursor.execute('''create table if not exists admin (
+        username VARCHAR(20) NOT NULL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        password VARCHAR(64) NOT NULL,
+        phone VARCHAR(13) NOT NULL,
+        mail VARCHAR(100) NOT NULL
+    )''')
+    db.commit()
 except Error as e:
     print("Database connection error: ",e)
+
 
 # rendering admin login page
 @app.route('/')
