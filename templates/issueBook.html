@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div>
-    <form action="{{url_for("issuingBook")}}" method="POST">
+    <form action="{{url_for('issuingBook')}}" method="POST">
         <label for="isbn">ISBN/BN</label>
         <input type="text" id="isbn" name="isbn" value="{{ bookid }}">
         <label for="user">User Id</label>

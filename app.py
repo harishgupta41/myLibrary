@@ -17,12 +17,12 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-session['error']=''
+# session['error']=''
 @app.route('/')
 def index():
     form = LoginForm()
-    
-    return render_template('login.html',form=form)
+    error=request.args.get('error')
+    return render_template('login.html',form=form,error=error)
     # return render_template('login1.html')  #removed form=form
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,23 +35,28 @@ def login():
         user = cursor.fetchall()
         # print(user)
         if user:
-            sotp=methods.sendOTP(user[0][3])
+            try:
+                sotp=methods.sendOTP(user[0][3])
+            except:
+                return "<h1>Vonage Client API Expired!\nPlease get a new key!</h1>"
             # session['admin']=username
             session['otp']=methods.sha256(sotp)
             # print(session['otp'])
             resp=make_response(redirect(url_for('otp')))
             resp.set_cookie('admin',username)
             return resp
-        else:
-            session['error']='User Not Found!'
+        # else:
+        #     session['error']='User Not Found!'
             # error = "User Not Found"
             # return redirect('/', code=302)
-    return redirect(url_for('index'))
+    # return render_template('login.html',form=form,error='User Not Found!')
+    return redirect(url_for('index',error="User Not Found"))
 
 @app.route('/otp')
 def otp():
     form=OTPForm()
-    return render_template('otp.html',form=form)
+    error=request.args.get('error')
+    return render_template('otp.html',form=form,error=error)
 
 @app.route('/verifyotp', methods=['GET', 'POST'])
 def verifyotp():
@@ -62,8 +67,8 @@ def verifyotp():
             session.pop('otp',None)
             return redirect(url_for('dashboard'))
         else:
-            return redirect(url_for('otp'))
-    session['error']=''
+            return redirect(url_for('otp',error="Invalid OTP!"))
+    # session['error']=''
     resp=make_response(redirect(url_for('login')))
     resp.set_cookie('admin','',max_age=0)
     return resp
