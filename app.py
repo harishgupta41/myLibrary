@@ -21,6 +21,7 @@ session['error']=''
 @app.route('/')
 def index():
     form = LoginForm()
+    
     return render_template('login.html',form=form)
     # return render_template('login1.html')  #removed form=form
 
@@ -42,9 +43,9 @@ def login():
             resp.set_cookie('admin',username)
             return resp
         else:
-            session['error']=''
-            error = "User Not Found"
-            return redirect('/', code=302)
+            session['error']='User Not Found!'
+            # error = "User Not Found"
+            # return redirect('/', code=302)
     return redirect(url_for('index'))
 
 @app.route('/otp')
@@ -62,6 +63,7 @@ def verifyotp():
             return redirect(url_for('dashboard'))
         else:
             return redirect(url_for('otp'))
+    session['error']=''
     resp=make_response(redirect(url_for('login')))
     resp.set_cookie('admin','',max_age=0)
     return resp
