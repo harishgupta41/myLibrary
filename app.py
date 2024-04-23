@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, session, make_respo
 from forms import LoginForm, OTPForm, AddBookForm, AddUserForm
 import methods
 import mysql.connector
+from mysql.connector import Error
 import uuid
 from datetime import datetime,timedelta
 
@@ -9,22 +10,59 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'MinorProjectLibraryManagementSystem'
 
 # Configure MySQL database connection
-db = mysql.connector.connect(
-    host="localhost",
-    user="djgupta",
-    password="djgupta",
-    database="library"
-)
+try:
+    db = mysql.connector.connect(
+        host="localhost",
+        user="harry",
+        password="dl3san3581",
+        database="library"
+    )
+    cursor = db.cursor()
+    # creating tables in database if they don't exist
+    cursor.execute('''create table if not exists users (
+        userId VARCHAR(64) NOT NULL PRIMARY KEY,
+        fname VARCHAR(100) NOT NULL,
+        phone VARCHAR(13) NOT NULL,
+        mail_id VARCHAR(100) NOT NULL,
+        fine INT(5) DEFAULT 0
+    )''')
+    cursor.execute('''create table if not exists books (
+        title VARCHAR(500) NOT NULL,
+        isbn_bn VARCHAR(64) NOT NULL PRIMARY KEY,
+        author VARCHAR(200) NOT NULL,
+        description VARCHAR(5000) NOT NULL,
+        Publisher VARCHAR(200),
+        gener VARCHAR(200)
+    )''')
+    cursor.execute('''create table if not exists issued_books (
+        isbn_bn VARCHAR(64) NOT NULL,
+        issuer VARCHAR(100) NOT NULL,
+        issue_date DATE NOT NULL,
+        return_date DATE NOT NULL,
+        book_name VARCHAR(100) NOT NULL,
+        author VARCHAR(100) NOT NULL,
+        issuer_id VARCHAR(64) NOT NULL
+    )''')
+    cursor.execute('''create table if not exists admin (
+        username VARCHAR(20) NOT NULL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        password VARCHAR(64) NOT NULL,
+        phone VARCHAR(13) NOT NULL,
+        mail VARCHAR(100) NOT NULL
+    )''')
+    db.commit()
+except Error as e:
+    print("Database connection error: ",e)
 
-cursor = db.cursor()
-# session['error']=''
+
+# rendering admin login page
 @app.route('/')
 def index():
     form = LoginForm()
-    
-    return render_template('login.html',form=form)
-    # return render_template('login1.html')  #removed form=form
+    error=request.args.get('error')
+    return render_template('login.html',form=form,error=error)
 
+# working logic for admin login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -33,26 +71,25 @@ def login():
         password = form.password.data
         cursor.execute("SELECT * FROM admin WHERE username = '{0}' AND password = '{1}'".format(username,methods.sha256(password)))
         user = cursor.fetchall()
-        # print(user)
         if user:
-            sotp=methods.sendOTP(user[0][3])
-            # session['admin']=username
+            try:
+                sotp=methods.sendOTP(user[0][3])
+            except:
+                return "<h1>Vonage Client API Expired!\nPlease get a new key!</h1>"
             session['otp']=methods.sha256(sotp)
-            # print(session['otp'])
             resp=make_response(redirect(url_for('otp')))
             resp.set_cookie('admin',username)
             return resp
-        else:
-            session['error']='User Not Found!'
-            # error = "User Not Found"
-            # return redirect('/', code=302)
-    return redirect(url_for('index'))
+    return redirect(url_for('index',error="User Not Found"))
 
+# rendering otp-verification page
 @app.route('/otp')
 def otp():
     form=OTPForm()
-    return render_template('otp.html',form=form)
+    error=request.args.get('error')
+    return render_template('otp.html',form=form,error=error)
 
+# verifying otp and loggin in admin
 @app.route('/verifyotp', methods=['GET', 'POST'])
 def verifyotp():
     form = OTPForm()
@@ -62,18 +99,23 @@ def verifyotp():
             session.pop('otp',None)
             return redirect(url_for('dashboard'))
         else:
-            return redirect(url_for('otp'))
-    session['error']=''
+            return redirect(url_for('otp',error="Invalid OTP!"))
     resp=make_response(redirect(url_for('login')))
     resp.set_cookie('admin','',max_age=0)
     return resp
 
+# rendering admin dashboard
 @app.route('/dashboard')
 def dashboard():
     if 'admin' in request.cookies:
-        return render_template('dashboard.html',title='admin-dashboard')
+        cursor.execute("select count(distinct userId) as user_count, count(distinct isbn_bn) as book_count from users, books")
+        counts=cursor.fetchone()
+        cursor.execute("select * from issued_books")
+        books=cursor.fetchall()
+        return render_template('dashboard.html',title='admin-dashboard',counts=counts,books=books, today=datetime.now().date())
     return redirect(url_for('index'))
     
+# rendering form to add book
 @app.route('/addBook')
 def addBook():
     if 'admin' in request.cookies:
@@ -81,6 +123,7 @@ def addBook():
         return render_template('addBook.html',title='add-book',form=form)
     return redirect(url_for('index'))
 
+# working logic to add book
 @app.route('/adding_book', methods=['GET', 'POST'])
 def adding_book():
     form = AddBookForm()
@@ -93,12 +136,12 @@ def adding_book():
         description = form.description.data
         publisher = form.publisher.data
         gener = form.gener.data
-        # Add book to database
         cursor.execute("insert into books values('{0}','{1}','{2}','{3}','{4}','{5}')".format(book_name, bookId, author, description, publisher, gener))
         db.commit()
         return redirect(url_for('dashboard'))
     return render_template('add_book.html', form=form)
 
+# render form to add user
 @app.route('/addUser')
 def addUser():
     if 'admin' in request.cookies:
@@ -106,6 +149,7 @@ def addUser():
         return render_template('addUser.html',title='add-user',form=form)
     return redirect(url_for('index'))
 
+# working logic to add user
 @app.route('/adding_user', methods=['GET', 'POST'])
 def adding_user():
     form = AddUserForm()
@@ -120,6 +164,7 @@ def adding_user():
         return redirect(url_for('dashboard'))
     return render_template('add_user.html', form=form)
 
+# render user page
 @app.route('/searchUser')
 def searchUser():
     if 'admin' in request.cookies:
@@ -131,6 +176,7 @@ def searchUser():
         return render_template('searchUser.html',title="users-all",data=data,fine=fine)
     return redirect(url_for('index'))
 
+# searching user in database
 @app.route('/searchigUser', methods=['GET','POST'])
 def searchingUser():
     if 'admin' in request.cookies:
@@ -142,6 +188,7 @@ def searchingUser():
         return redirect(url_for('searchUser'))
     return redirect(url_for('index'))
 
+# showing individual users profile
 @app.route('/showUser')
 def showUser():
     if 'admin' in request.cookies:
@@ -151,6 +198,7 @@ def showUser():
         return render_template('userDetails.html',title='user-{0}'.format(userid),data=data)
     return redirect(url_for('index'))
 
+# edit user details form 
 @app.route('/editUser')
 def editUser():
     if 'admin' in request.cookies:
@@ -161,6 +209,7 @@ def editUser():
         return render_template('editUserDetails.html',title='edit-user-{0}'.format(userid),data=data,form=form)
     return redirect(url_for('index'))
 
+# saving edited details
 @app.route('/savingUser',methods=['POST'])
 def savingUser():
     if 'admin' in request.cookies:
@@ -177,7 +226,7 @@ def savingUser():
         return redirect(url_for('editUser'))
     return redirect(url_for('index'))
 
-
+# delete user
 @app.route('/deleteUser')
 def deleteUser():
     if 'admin' in request.cookies:
@@ -187,7 +236,7 @@ def deleteUser():
         return redirect(url_for('dashboard'))
     return redirect(url_for('index'))
 
-
+# books template 
 @app.route('/searchBooks')
 def searchBooks():
     if 'admin' in request.cookies:
@@ -197,6 +246,7 @@ def searchBooks():
         return render_template('searchBook.html',title='books-all',data=data)
     return redirect(url_for('index'))
 
+# searching for book in database
 @app.route('/searchingBook', methods=['GET','POST'])
 def searchingBook():
     if 'admin' in request.cookies:
@@ -208,6 +258,7 @@ def searchingBook():
         return redirect(url_for('searchBooks'))
     return redirect(url_for('index'))
 
+# show book details
 @app.route('/showBook')
 def showBook():
     if 'admin' in request.cookies:
@@ -223,6 +274,7 @@ def showBook():
         return render_template('bookDetails.html',title='book-{0}'.format(bookid),data=data,status=status)
     return redirect(url_for('index'))
 
+# edit book details
 @app.route('/editBook')
 def editBook():
     if 'admin' in request.cookies:
@@ -233,6 +285,7 @@ def editBook():
         return render_template('editBookDetails.html',title='edit-book-{0}'.format(bookid),data=data,form=form)
     return redirect(url_for('index'))
 
+# saving edited details of book
 @app.route('/savingBook',methods=['POST'])
 def savingBook():
     if 'admin' in request.cookies:
@@ -252,7 +305,7 @@ def savingBook():
         return redirect(url_for('editBook'))
     return redirect(url_for('index'))
 
-
+# deleting book from database
 @app.route('/deleteBook')
 def deleteBook():
     if 'admin' in request.cookies:
@@ -262,8 +315,7 @@ def deleteBook():
         return redirect(url_for('dashboard'))
     return redirect(url_for('index'))
 
-
-
+# issue book form
 @app.route('/issueBook')
 def issueBook():
     if 'admin' in request.cookies:
@@ -273,6 +325,7 @@ def issueBook():
         return render_template('issueBook.html',title='issue-Book')
     return redirect(url_for('index'))
 
+# saving issuer and book details in database
 @app.route('/issuingBook', methods=['POST','GET'])
 def issuingBook():
     if 'admin' in request.cookies:
@@ -290,16 +343,16 @@ def issuingBook():
             cursor.execute("insert into issued_books values('{0}','{1}','{2}','{3}','{4}','{5}','{6}')".format(bookid,user[1],datetime.now().date(),datetime.now().date()+timedelta(days=7),book[0],book[2],userid))
             db.commit()
             return redirect('dashboard')
-
     return redirect(url_for('index'))
 
-
+# return book form
 @app.route('/returnBook')
 def returnBook():
     if 'admin' in request.cookies:
         return render_template('returnBook.html',title='return-book')
     return redirect(url_for('index'))
 
+# returning book and calculating fine if any and writing it in database
 @app.route('/returningBook', methods=['POST','GET'])
 def returningBook():
     if 'admin' in request.cookies:
@@ -320,11 +373,23 @@ def returningBook():
                 return redirect('dashboard')
     return redirect(url_for('index'))
 
+# clearing users fine
+@app.route('/payFine')
+def payFine():
+    if 'admin' in request.cookies:
+        userid=request.args.get('id')
+        cursor.execute("update users set fine=0 where userId='{0}'".format(userid))
+        db.commit()
+        return redirect('searchUser')
+    return redirect(url_for('index'))
+
+# logout admin
 @app.route('/logout')
 def logout():
     resp=make_response(render_template("logout.html"))
     resp.set_cookie('admin','',max_age=0)
     return resp
 
+# driver code for server
 if __name__ == '__main__':
     app.run(debug=True)

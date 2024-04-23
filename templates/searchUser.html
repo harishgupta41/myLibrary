@@ -40,10 +40,12 @@
   <div class="fine-users">
     <h1>Pending Fine</h1>
     {% if fine %} {% for user in fine %}
+    {% if fine %} {% for user in fine %}
     <div>
       <p>{{user[1]}}</p>
       <p>Fine: {{user[4]}}</p>
     </div>
+    {% endfor %} {% endif %}
     {% endfor %} {% endif %}
   </div>
 </div>
