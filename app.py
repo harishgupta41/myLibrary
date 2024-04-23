@@ -108,7 +108,11 @@ def verifyotp():
 @app.route('/dashboard')
 def dashboard():
     if 'admin' in request.cookies:
-        return render_template('dashboard.html',title='admin-dashboard')
+        cursor.execute("select count(distinct userId) as user_count, count(distinct isbn_bn) as book_count from users, books")
+        counts=cursor.fetchone()
+        cursor.execute("select * from issued_books")
+        books=cursor.fetchall()
+        return render_template('dashboard.html',title='admin-dashboard',counts=counts,books=books, today=datetime.now().date())
     return redirect(url_for('index'))
     
 # rendering form to add book

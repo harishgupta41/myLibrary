@@ -2,10 +2,37 @@
 <div class="dashboard">
   <h1>dashboard</h1>
   <div class="body">
-    <a href="{{url_for('addBook')}}">Add Book</a>
-    <a href="{{url_for('searchBooks')}}">Search Books</a>
-    <a href="{{url_for('addUser')}}">Add User</a>
-    <a href="{{url_for('searchUser')}}">Search User</a>
+    <div class="info">
+      {% if counts %}
+      <p>Total Books: {{ counts[1] }}</p>
+      <p>Total Users: {{ counts[0] }}</p>
+      {% endif %}
+    </div>
+    <div class="books-data">
+      <div class="issued-books">
+        <h2>Issued Books</h2>
+        {% if books %} {% for book in books %}
+        <div class="book">
+          <p>{{ book[4] }}</p>
+          <p>{{ book[1] }}</p>
+          <p>{{ book[6] }}</p>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+      <div class="overdue-books">
+        <h2>Pending/Overdue Return</h2>
+        {% if books %} {% for book in books %} {% if book[3] <=
+        today %}
+
+        <div class="book">
+          <p>{{ book[4] }}</p>
+          <p>{{ book[1] }}</p>
+          <p>{{ book[6] }}</p>
+          <p>{{ book[3] }}</p>
+        </div>
+        {% endif %} {% endfor %} {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, SubmitField, PasswordField
+from wtforms import StringField, validators, SubmitField, PasswordField, TextAreaField
 
 class LoginForm(FlaskForm):
     username = StringField('Username',[
@@ -29,7 +29,7 @@ class AddBookForm(FlaskForm):
     author=StringField('Author',[
         validators.DataRequired(message="Author's name should be filled")
     ])
-    description=StringField('Book Description')
+    description=TextAreaField('Book Description')
     publisher=StringField('Publisher')
     gener=StringField('Gener',[
         validators.DataRequired(message="Gener should be filled")
