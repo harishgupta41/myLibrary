@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <title>Admin-Login</title>
+</head>
+<body>
+    <div class="login-container">
+    <div class="login">
+        {% if code == 302 %}
+        <div class="error">
+            <h1>User Not Found</h1>
+        </div>
+        {% endif %}
+        {{code}}
+        <h1>Login</h1>
+
+        <form action="{{url_for("login")}}" method="POST">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.username.label }}<br>
+                {{ form.username(size=20) }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.password.label }}<br>
+                {{ form.password(size=20) }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <div >
+                {{ form.submit() }}
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

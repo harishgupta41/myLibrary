@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+</head>
+<body>
+    <div class="otp-box">
+
+        <h1>OTP Verification</h1>
+        <form action="{{url_for("verifyotp")}}" method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.otp.label }}<br>
+            {{ form.otp(size=20) }}<br>
+            {% for error in form.otp.errors %}
+            <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+</div>
+</body>
+</html>

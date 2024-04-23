@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="book-details">
+    {% if data %}
+    <p>{{ data[0][0] }}</p>
+    <p>{{ data[0][1] }}</p>
+    <p>{{ data[0][2] }}</p>
+    <p>{{ data[0][3] }}</p>
+    <p>{{ data[0][4] }}</p>
+    <p>{{ data[0][5] }}</p>
+
+    <p>Book Status: {{ status }}</p>
+    <a href="/editBook?id={{ data[0][1] }}"><button>Edit Details</button></a>
+    <a href="/deleteBook?id={{ data[0][1] }}"><button>Delete Book</button></a>
+        {% if status=='Available' %}
+            <a href="/issueBook?id={{ data[0][1] }}"><button>Issue Books</button></a>
+        {% endif %}
+    {% else %}
+        <h2>No Book Data!</h2>
+    {% endif %}
+</div>
+{% endblock %}

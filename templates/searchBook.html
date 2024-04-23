@@ -1,0 +1,27 @@
+{% extends "layout.html" %} {% block content %}
+<div class="search-book">
+  <a href="{{url_for("addBook")}}"><button>Add New</button></a>
+  <div class="search-bar">
+    <form action="{{url_for("searchingBook")}}" method="POST">
+      <input type="search" name="query" />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <div class="books">
+    {% if data %}
+    {% for book in data %}
+    <a href="/showBook?id={{ book[1] }}"><div class="book">
+        <i class="fa-solid fa-book"></i>
+        <p>{{book[0]}}</p>
+        <p>{{book[2]}}</p>
+    </div>
+</a>
+    {% endfor %}
+    {% else %}
+        <div class="error">
+            <h3>No book Found!</h3>
+        </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

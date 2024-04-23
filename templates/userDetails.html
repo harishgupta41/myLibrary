@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="user-details">
+    {% if data %}
+        <p>{{ data[0][1] }}</p>
+        <p>{{ data[0][0] }}</p>
+        <p>{{ data[0][2] }}</p>
+        <p>{{ data[0][3] }}</p>
+
+        <a href="/editUser?id={{ data[0][0] }}"><button>Edit Details</button></a>
+        <a href="/deleteUser?id={{ data[0][0] }}"><button>Delete User</button></a>
+    {% else %}
+        <h2>No User Data!</h2>
+    {% endif %}
+</div>
+{% endblock %}
