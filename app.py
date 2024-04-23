@@ -369,6 +369,16 @@ def returningBook():
                 return redirect('dashboard')
     return redirect(url_for('index'))
 
+# clearing users fine
+@app.route('/payFine')
+def payFine():
+    if 'admin' in request.cookies:
+        userid=request.args.get('id')
+        cursor.execute("update users set fine=0 where userId='{0}'".format(userid))
+        db.commit()
+        return redirect('searchUser')
+    return redirect(url_for('index'))
+
 # logout admin
 @app.route('/logout')
 def logout():
