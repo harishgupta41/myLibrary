@@ -17,10 +17,10 @@
   <h1>Users</h1>
   <div class="d-flex flex-wrap">
     {% if data %} {% for users in data %}
-    <a href="/showUser?id={{ users[0] }}" class="">
+    <a href="/showUser?id={{ users[0] }}" class="" style="text-decoration: none; color: black;">
       <div
         class="border border-dark m-2 d-flex align-items-center justify-content-around rounded border-radius-2"
-        style="width: 14rem"
+        style="width:14rem;"
       >
         <i
           class="fa-solid fa-user fs-1 text-info rounded-circle p-2 bg-white border border-secondary"
