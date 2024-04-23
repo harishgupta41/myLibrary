@@ -1,36 +1,45 @@
 {% extends "layout.html" %} {% block content %}
 <div class="dashboard">
-  <h1>dashboard</h1>
+  <h2 class="text-center">Dashboard</h2>
   <div class="body">
-    <div class="info">
-      {% if counts %}
-      <p>Total Books: {{ counts[1] }}</p>
-      <p>Total Users: {{ counts[0] }}</p>
-      {% endif %}
+    {% if counts %}
+    <div class="d-flex mx-4 text-success">
+      <p class="mx-4 fw-bold">Total Books: {{ counts[1] }}</p>
+      <p class="mx-4 fw-bold">Total Users: {{ counts[0] }}</p>
     </div>
-    <div class="books-data">
-      <div class="issued-books">
-        <h2>Issued Books</h2>
+    {% endif %}
+    <div class="d-flex justify-content-around">
+      <div class="issued-books mx-2" style="max-height: 70vh; overflow: scroll;">
+        <h3 class="text-center text-info position-sticky top-0 z-1 bg-white">Issued Books</h3>
         {% if books %} {% for book in books %}
-        <div class="book">
+        <div class="card border border-secondary p-3 m-1">
           <p>{{ book[4] }}</p>
           <p>{{ book[1] }}</p>
           <p>{{ book[6] }}</p>
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %} 
+        {% else %}
+          <div class="alert alert-success position-sticky top-0 z-1 bg-white">
+            <h4>No Book Issued</h4>
+          </div>
+        {% endif %}
       </div>
-      <div class="overdue-books">
-        <h2>Pending/Overdue Return</h2>
-        {% if books %} {% for book in books %} {% if book[3] <=
-        today %}
+      <div class="overdue-books m-2">
+        <h3 class="text-center text-danger">Pending/Overdue Return</h3>
+        {% if books %} {% for book in books %} {% if book[3] <= today %}
 
-        <div class="book">
+        <div class="card border border-secondary p-3">
           <p>{{ book[4] }}</p>
           <p>{{ book[1] }}</p>
           <p>{{ book[6] }}</p>
           <p>{{ book[3] }}</p>
         </div>
-        {% endif %} {% endfor %} {% endif %}
+        {% endif %} {% endfor %} 
+        {% else %}
+        <div class="alert alert-success">
+          <h4>No Book Overdue</h4>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
