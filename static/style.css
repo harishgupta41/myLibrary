@@ -146,6 +146,10 @@ nav a:hover {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.otp-box label{
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
 .form {
   width: 100%;
   border: 1px solid lightgray;
