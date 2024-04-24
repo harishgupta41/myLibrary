@@ -108,8 +108,9 @@ def verifyotp():
 @app.route('/dashboard')
 def dashboard():
     if 'admin' in request.cookies:
-        cursor.execute("select count(distinct userId) as user_count, count(distinct isbn_bn) as book_count from users, books")
+        cursor.execute("select (select count(distinct userId) from users) as user_count, (select count(distinct isbn_bn) from books) as book_count")
         counts=cursor.fetchone()
+        print(counts)
         cursor.execute("select * from issued_books")
         books=cursor.fetchall()
         return render_template('dashboard.html',title='admin-dashboard',counts=counts,books=books, today=datetime.now().date())
@@ -129,8 +130,6 @@ def adding_book():
     form = AddBookForm()
     if form.validate_on_submit():
         bookId=form.bookId.data
-        # if bookId =='':
-        #     bookId=uuid.uuid4().int
         book_name = form.bookName.data
         author = form.author.data
         description = form.description.data

@@ -4,9 +4,9 @@
     <form action="{{url_for("issuingBook")}}" method="POST" class="form">
         <h3>Issue Book</h3>
         <label for="isbn">ISBN/BN</label>
-        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ bookid }}">
+        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ bookid }}" required minlength="13" maxlength="13">
         <label for="user">User Id</label>
-        <input type="text" name="userid" id="user" class="form-control" />
+        <input type="text" name="userid" id="user" class="form-control" required minlength="10" maxlength="10"/>
         <button type="submit" class="btn btn-outline-success mt-3" style="width: 100%;">Issue</button>
     </form>
 </div>
