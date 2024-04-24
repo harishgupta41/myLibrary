@@ -3,7 +3,6 @@ from forms import LoginForm, OTPForm, AddBookForm, AddUserForm
 import methods
 import mysql.connector
 from mysql.connector import Error
-import uuid
 from datetime import datetime,timedelta
 
 app = Flask(__name__)
