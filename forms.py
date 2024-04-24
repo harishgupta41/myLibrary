@@ -22,17 +22,23 @@ class OTPForm(FlaskForm):
     csrf_token = StringField('CSRF Token')
 
 class AddBookForm(FlaskForm):
-    bookId= StringField('ISBN')
+    bookId= StringField('ISBN',[validators.length(min=13,max=13,message='ISBN should be of 13 digits'),
+                                validators.DataRequired(message='ISBN should be provided')])
     bookName= StringField('Book Name',[
-        validators.DataRequired(message="Book name cannot be empty")
+        validators.DataRequired(message="Book name cannot be empty"),
+        validators.length(max=500)
     ])
     author=StringField('Author',[
-        validators.DataRequired(message="Author's name should be filled")
+        validators.DataRequired(message="Author's name should be filled"),
+        validators.length(max=200)
     ])
-    description=TextAreaField('Book Description')
-    publisher=StringField('Publisher')
+    description=TextAreaField('Book Description',[
+        validators.length(max=5000,message='should not exceede 5000 characters')
+    ])
+    publisher=StringField('Publisher',[validators.length(max=200)])
     gener=StringField('Gener',[
-        validators.DataRequired(message="Gener should be filled")
+        validators.DataRequired(message="Gener should be filled"),
+        validators.length(max=200)
     ])
     save=SubmitField('Save Details',render_kw={'class':'addUser-btn'})
     submit=SubmitField('Add Book',render_kw={'class':'addBook-btn'})
@@ -40,13 +46,16 @@ class AddBookForm(FlaskForm):
 
 class AddUserForm(FlaskForm):
     name=StringField("Full Name",[
-        validators.DataRequired(message="Name must pe provided")
+        validators.DataRequired(message="Name must pe provided"),
+        validators.length(max=100)
     ])
     phone=StringField("Phone",[
-        validators.DataRequired(message="Phone number with country code")
+        validators.DataRequired(message="Phone number with country code"),
+        validators.length(min=10,max=10,message='phone number should be of 10 digits')
     ])
     mail=StringField("Mail ID",[
         validators.DataRequired(message="Mail cannot be empty"),
+        validators.length(max=100)
     ])
     save=SubmitField('Save Details',render_kw={'class':'addUser-btn'})
     submit=SubmitField('Add User',render_kw={'class':'addUser-btn'})

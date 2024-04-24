@@ -9,6 +9,13 @@ def sha256(data):
     sha.update(data)
     return sha.hexdigest()
 
+def uniqueId(id):
+    uid=''.join([str(random.randint(0, 9)) for _ in range(10)])
+    if uid in id:
+        return uniqueId(id)
+    else:
+        return uid
+
 #creating client service
 client = vonage.Client(key="600eb289", secret="GUdtunPwXOEde1Uu")
 sms = vonage.Sms(client)

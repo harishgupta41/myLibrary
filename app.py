@@ -129,8 +129,8 @@ def adding_book():
     form = AddBookForm()
     if form.validate_on_submit():
         bookId=form.bookId.data
-        if bookId =='':
-            bookId=uuid.uuid4().int
+        # if bookId =='':
+        #     bookId=uuid.uuid4().int
         book_name = form.bookName.data
         author = form.author.data
         description = form.description.data
@@ -154,12 +154,17 @@ def addUser():
 def adding_user():
     form = AddUserForm()
     if form.validate_on_submit():
-        userid=uuid.uuid4().int
+        cursor.execute('select userId from users')
+        id=cursor.fetchall()
+        print(id)
+        userid=methods.uniqueId(id)
+        print(userid)
         username = form.name.data
         email = form.mail.data
         phone = form.phone.data
+        phone = "+91"+phone
         # Add user to database
-        cursor.execute("insert into users values('{0}','{1}','{2}','{3}',0)".format(userid, username, phone, email))
+        cursor.execute("insert into users values('{0}','{1}','{2}','{3}',{4})".format(userid, username, phone, email,0))
         db.commit()
         return redirect(url_for('dashboard'))
     return render_template('add_user.html', form=form)
