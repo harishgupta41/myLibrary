@@ -12,8 +12,8 @@ app.config['SECRET_KEY'] = 'MinorProjectLibraryManagementSystem'
 try:
     db = mysql.connector.connect(
         host="localhost",
-        user="harry",
-        password="dl3san3581",
+        user="",
+        password="",
         database="library"
     )
     cursor = db.cursor()
